@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
-from models.models import User, UserAge, Feedback
+from models.models import User, UserAge, Feedback, UserCreate
 app = FastAPI()
 
 user: User = User(name="John Doe", id=1)
@@ -24,3 +24,7 @@ def user_age(user:UserAge):
 @app.post('/feedback')
 def user_age(feedback:Feedback):
         return {"message": "Feedback received. Thank you, Alice!"}
+
+@app.post('/create_user')
+def create_user(item:UserCreate) -> UserCreate:
+        return item
