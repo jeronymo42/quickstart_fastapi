@@ -32,23 +32,13 @@ def create_user(item:UserCreate) -> UserCreate:
         return item
 
 @app.get('/product/{product_id}')
-def user_info(product_id: int) -> Dict | None:
-        for product in sample_products:
-                if product['product_id'] == product_id:
-                        return product
-                continue
+def user_info(product_id: int) -> List:
+        return list(filter(lambda x: x['product_id'] == product_id, sample_products))
 
 
 @app.get('/products/search')
 def user_info(keyword:str, category:str | None = None, limit: int | None = 10) -> List[Dict] | None:
-        result = []
-        for product in sample_products:
-                if keyword in product['name']:
-                        if category:
-                                if product['category'] == category:
-                                        result.append(product)
-                                        continue
-                        result.append(product)
-                        if len(result) == limit:
-                                break
-        return result
+        if not category:
+                base_result = list(filter(lambda x: keyword.lower() in x['name'].lower(), sample_products))
+                return list(filter(lambda x: category.lower() == x['category'].lower(), base_result))[:limit]
+        return list(filter(lambda x: keyword.lower() in x['name'].lower(), sample_products))[:limit]
