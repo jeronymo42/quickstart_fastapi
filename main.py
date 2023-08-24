@@ -3,6 +3,8 @@ from fastapi.responses import FileResponse
 from models.models import User, UserAge, Feedback, UserCreate
 from products_db import sample_products
 from typing import Dict, List
+from usersdb import testUsers
+
 app = FastAPI()
 
 user: User = User(name="John Doe", id=1)
